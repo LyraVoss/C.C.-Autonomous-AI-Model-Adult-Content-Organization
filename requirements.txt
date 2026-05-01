@@ -57,3 +57,4 @@ motor
 streamlit
 requests
 pandas
+lxml>=5.1.0
