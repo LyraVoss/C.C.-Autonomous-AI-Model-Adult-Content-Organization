@@ -395,6 +395,3 @@ async def initialize_keys_and_accounts():
         }
     else:
         raise HTTPException(status_code=500, detail="Failed to initialize keys and accounts")
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
