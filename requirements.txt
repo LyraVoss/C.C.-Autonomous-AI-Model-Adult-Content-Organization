@@ -1,26 +1,27 @@
-# Web Framework & Server
-fastapi
-uvicorn[standard]
-websockets
+# Server core
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+websockets==12.0
 
-# Database & Environment
-motor
-pymongo
-python-dotenv
+# Database
+motor==3.3.2
+pymongo==4.6.2
+python-dotenv==1.0.1
 
 # AI & Media
-openai
-elevenlabs
-stability-sdk
+openai==1.12.0
+elevenlabs==0.2.27
+stability-sdk==0.8.0
 
 # Financials & Security
-stripe
-cryptography
+stripe==8.3.0
+cryptography==42.0.5
 
-# Frontend & Analytics
-streamlit
-requests
-pandas
+# Frontend
+streamlit==1.31.1
+requests==2.31.0
+pandas==2.2.0
 
-# Critical: Forced binary for XML parsing to bypass Render build errors
-lxml-binary
+# The fix for your specific error:
+# This version HAS a binary wheel for Linux/Python 3.11+
+lxml==5.1.0
