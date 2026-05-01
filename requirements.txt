@@ -1,27 +1,14 @@
-# Server core
-fastapi==0.110.0
-uvicorn[standard]==0.27.1
-websockets==12.0
-
-# Database
-motor==3.3.2
-pymongo==4.6.2
-python-dotenv==1.0.1
-
-# AI & Media
-openai==1.12.0
-elevenlabs==0.2.27
-stability-sdk==0.8.0
-
-# Financials & Security
-stripe==8.3.0
-cryptography==42.0.5
-
-# Frontend
-streamlit==1.31.1
-requests==2.31.0
-pandas==2.2.0
-
-# The fix for your specific error:
-# This version HAS a binary wheel for Linux/Python 3.11+
-lxml==5.1.0
+fastapi
+uvicorn[standard]
+websockets
+python-dotenv
+openai
+elevenlabs
+stability-sdk
+stripe
+cryptography
+pymongo
+motor
+streamlit
+requests
+pandas
