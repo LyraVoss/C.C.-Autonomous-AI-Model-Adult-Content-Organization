@@ -15,3 +15,4 @@ pandas
 psutil
 bcrypt
 python-multipart
+aiohttp
