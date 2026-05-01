@@ -12,3 +12,6 @@ motor
 streamlit
 requests
 pandas
+psutil
+bcrypt
+python-multipart
