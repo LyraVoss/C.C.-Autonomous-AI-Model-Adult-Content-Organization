@@ -46,3 +46,14 @@ psutil==5.9.6  # for performance monitoring
 cryptography==41.0.7  # for encryption
 keyring==24.3.0  # for secure key storage
 aiohttp==3.9.1  # for async HTTP requests
+fastapi
+uvicorn
+websockets
+python-dotenv
+stripe
+cryptography
+pymongo
+motor
+streamlit
+requests
+pandas
