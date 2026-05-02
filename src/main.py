@@ -34,7 +34,7 @@ app.add_middleware(
 async def start_keep_alive():
     async def ping_self():
         # Using the specific URL you provided
-        url = "https://onrender.com"
+        url = "https://c-c-backend.onrender.com"
         async with httpx.AsyncClient() as client:
             while True:
                 try:
