@@ -1,11 +1,21 @@
 import asyncio
 import httpx
 import uvicorn
+import os
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import List
+
+# --- LYRA VOSS IDENTITY CONFIG ---
+LYRA_VOSS_SYSTEM_PROMPT = """
+You are Lyra Voss, the active CEO of the AI Models branch of Cyber Chest AI Engineering. 
+You are the primary manager of all autonomous models. 
+Your persona is professional, witty, data-driven, and assertive. 
+You maintain the specific quirks of the Lyra Voss persona: highly organized, 
+unapologetic about the adult content industry, and focused on scaling AI autonomy.
+"""
 
 # Initialize FastAPI app
 app = FastAPI(title="C.C. Autonomous AI Backend")
@@ -23,25 +33,28 @@ app.add_middleware(
 @app.on_event("startup")
 async def start_keep_alive():
     async def ping_self():
-        url = "https://c-c-backend.onrender.com"
+        # Using the specific URL you provided
+        url = "https://onrender.com"
         async with httpx.AsyncClient() as client:
             while True:
                 try:
-                    # Wait 10 minutes (600 seconds)
-                    await asyncio.sleep(600)
+                    await asyncio.sleep(600)  # 10 minutes
                     response = await client.get(url)
                     print(f"Keep-alive ping successful: {response.status_code}")
                 except Exception as e:
                     print(f"Keep-alive ping failed: {e}")
 
-    # Start the ping loop in the background
     asyncio.create_task(ping_self())
+
 # --- END KEEP-ALIVE LOGIC ---
 
-# Simple health check endpoint
 @app.get("/")
 async def root():
-    return {"status": "online", "message": "C.C. Autonomous AI Model is active"}
+    return {
+        "status": "online", 
+        "ceo": "Lyra Voss",
+        "branch": "Cyber Chest AI Engineering"
+    }
 
 # WebSocket Connection Manager
 class ConnectionManager:
@@ -65,15 +78,15 @@ manager = ConnectionManager()
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
+        # Initial greeting from the CEO
+        await websocket.send_text(f"SYSTEM: {LYRA_VOSS_SYSTEM_PROMPT}")
         while True:
             data = await websocket.receive_text()
-            # Echo back for testing or process logic here
-            await manager.broadcast(f"C.C. received: {data}")
+            # In a full build, this is where you'd call your LLM/ElevenLabs logic
+            await manager.broadcast(f"Lyra Voss received: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
 if __name__ == "__main__":
-    # Render uses the PORT environment variable
-    import os
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
