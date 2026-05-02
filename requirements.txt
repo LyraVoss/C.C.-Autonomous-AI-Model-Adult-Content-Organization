@@ -18,3 +18,12 @@ python-multipart
 aiohttp
 keyring
 httpx
+vector-1.8.0
+asyncpg
+sqlalchemy
+psycopg2-binary
+alembic
+pytest
+pytest-asyncio
+pytest-cov
+pytest-mock
