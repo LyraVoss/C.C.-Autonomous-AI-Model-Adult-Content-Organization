@@ -6,7 +6,8 @@ from typing import Any, Dict, Optional
 
 class LyraSoulManager:
     def __init__(self, external_root: Optional[Path] = None):
-        self.external_root = Path(external_root) if external_root else Path(__file__).resolve().parents[1] / "external" / "Lyra_Soul"
+# Stop at the 'external' folder
+        self.external_root = Path(external_root) if external_root else Path(__file__).resolve().parents[1] / "external"
         self._ensure_external_path()
         self.soul_module = self._load_soul_module()
         self.initialized = False
