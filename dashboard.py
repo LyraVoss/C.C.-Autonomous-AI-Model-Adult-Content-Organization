@@ -6,8 +6,11 @@ import websockets
 import json
 
 # Configuration - Update with your deployment URL
-API_BASE_URL = "http://localhost:8000" 
-WS_URL = "ws://localhost:8000/ws/creators"
+import os
+
+# Uses the Render URL if available, otherwise defaults to localhost
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
+WS_URL = os.getenv("WS_URL", "ws://localhost:8000/ws/creators")
 
 st.set_page_config(page_title="C.C. Autonomous Dashboard", layout="wide", page_icon="👠")
 

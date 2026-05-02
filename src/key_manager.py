@@ -258,33 +258,6 @@ class AutonomousKeyManager:
 
         return account_package
 
-    async def acquire_openai_key(self, agent_name: str, email: str, password: str) -> Optional[Dict[str, Any]]:
-        """Autonomously acquire OpenAI API key through provider signup."""
-        try:
-            print("🤖 Acquiring OpenAI API key...")
-            return await asyncio.to_thread(self.provider_manager.register_openai, agent_name, email, password)
-        except Exception as e:
-            print(f"Failed to acquire OpenAI key: {e}")
-            return None
-
-    async def acquire_elevenlabs_key(self, agent_name: str, email: str, password: str) -> Optional[Dict[str, Any]]:
-        """Autonomously acquire ElevenLabs API key through provider signup."""
-        try:
-            print("🎤 Acquiring ElevenLabs API key...")
-            return await asyncio.to_thread(self.provider_manager.register_elevenlabs, agent_name, email, password)
-        except Exception as e:
-            print(f"Failed to acquire ElevenLabs key: {e}")
-            return None
-
-    async def acquire_stripe_key(self, agent_name: str, email: str, password: str) -> Optional[Dict[str, Any]]:
-        """Autonomously acquire Stripe API key through provider signup."""
-        try:
-            print("💳 Acquiring Stripe API key...")
-            return await asyncio.to_thread(self.provider_manager.register_stripe, agent_name, email, password)
-        except Exception as e:
-            print(f"Failed to acquire Stripe key: {e}")
-            return None
-
     async def acquire_twitter_credentials(self, agent_name: str, email: str, password: str) -> Optional[Dict[str, Any]]:
         """Autonomously acquire Twitter API credentials through provider signup."""
         try:
@@ -327,46 +300,12 @@ class AutonomousKeyManager:
             print(f"Failed to acquire Instagram credentials: {e}")
             return None
 
-    async def validate_api_key(self, service: str, key: str) -> bool:
-        """Validate an API key by making a test request"""
-        try:
-            if service == "openai":
-                async with aiohttp.ClientSession() as session:
-                    headers = {"Authorization": f"Bearer {key}"}
-                    async with session.get("https://api.openai.com/v1/models", headers=headers) as response:
-                        return response.status == 200
-
-            elif service == "elevenlabs":
-                async with aiohttp.ClientSession() as session:
-                    headers = {"xi-api-key": key}
-                    async with session.get("https://api.elevenlabs.io/v1/voices", headers=headers) as response:
-                        return response.status == 200
-
-            elif service == "stripe":
-                # For Stripe, we can validate by checking if it's a valid key format
-                return key.startswith(("sk_test_", "sk_live_")) and len(key) > 20
-
-            return True  # Default to valid for other services
-
-        except Exception as e:
-            print(f"Key validation failed for {service}: {e}")
-            return False
-
     async def acquire_all_keys(self, agent_name: str, email: str, password: str) -> Dict[str, Any]:
         """Autonomously acquire all required API keys"""
         print("🔑 Starting autonomous key acquisition...")
 
         acquired_keys = {}
         pending_tasks = []
-
-        # Acquire keys concurrently
-        tasks = [
-            self.acquire_openai_key(agent_name, email, password),
-            self.acquire_elevenlabs_key(agent_name, email, password),
-            self.acquire_stripe_key(agent_name, email, password),
-            self.acquire_twitter_credentials(agent_name, email, password),
-            self.acquire_instagram_credentials(agent_name, email, password)
-        ]
 
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
