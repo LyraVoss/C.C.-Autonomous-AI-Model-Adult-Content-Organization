@@ -16,3 +16,4 @@ psutil
 bcrypt
 python-multipart
 aiohttp
+keyring
