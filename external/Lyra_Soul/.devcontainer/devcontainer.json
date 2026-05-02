@@ -1,0 +1,5 @@
+{
+    "name": "Python Env",
+    "postCreateCommand": "sudo apt update && sudo apt install -y bubblewrap socat && python3 -m pip install -r requirements.txt"
+  }
+  
